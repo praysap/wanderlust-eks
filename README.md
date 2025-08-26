@@ -83,6 +83,10 @@ eksctl create cluster --name three-tier-cluster --region us-west-2 --node-type t
 aws eks update-kubeconfig --region us-west-2 --name three-tier-cluster
 kubectl get nodes
 ```
+<img width="941" height="459" alt="image (2)" src="https://github.com/user-attachments/assets/4570952b-5cf5-472b-8dcf-9d1e403bb426" />
+
+<img width="800" height="166" alt="image (3)" src="https://github.com/user-attachments/assets/77124c0d-6501-41b4-81e8-159ce50fb7bc" />
+
 
 ### Step 8: Run Manifests
 ``` shell
