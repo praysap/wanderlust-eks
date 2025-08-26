@@ -111,6 +111,14 @@ Go to EC2 console, access security group section and delete security groups crea
 
 <img width="1079" height="665" alt="blog-added" src="https://github.com/user-attachments/assets/33676805-82f3-466e-8e8a-87ad293097d5" />
 
+<img width="955" height="500" alt="image" src="https://github.com/user-attachments/assets/49708fe4-f474-45f8-bb06-9c1e74e05c50" />
+
+<img width="957" height="497" alt="image (1)" src="https://github.com/user-attachments/assets/5a89a16d-60ef-4c5c-8721-555d1a39f110" />
+
+
+
+
+
 
 ---
 Happy Learning! 🚀👨‍💻👩‍💻
