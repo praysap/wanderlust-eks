@@ -14,6 +14,9 @@ app.use(compression());
 // Connect to database
 connectDB();
 
+app.get('/ok', (req, res) => {
+    res.status(200).send('ok')
+})
 // API route
 app.use('/api/posts', postsRouter);
 

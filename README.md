@@ -4,111 +4,116 @@ WanderLust is a simple MERN travel blog website ✈ This project is aimed to hel
 
 ![Preview Image](https://github.com/krishnaacharyaa/wanderlust/assets/116620586/17ba9da6-225f-481d-87c0-5d5a010a9538)
 
-## [Figma Design File](https://www.figma.com/file/zqNcWGGKBo5Q2TwwVgR6G5/WanderLust--A-Travel-Blog-App?type=design&node-id=0%3A1&mode=design&t=c4oCG8N1Fjf7pxTt-1)
-## [Discord Channel](https://discord.gg/FEKasAdCrG)
 
-## 🎯 Goal of this project
+## Application Code
+The `Application-Code` directory contains the source code for the Three-Tier Web Application. Dive into this directory to explore the frontend and backend implementations.
 
-At its core, this project embodies two important aims:
+## Jenkins Pipeline Code
+In the `Jenkins-Pipeline-Code` directory, you'll find Jenkins pipeline scripts. These scripts automate the CI/CD process, ensuring smooth integration and deployment of your application.
 
-1. **Start Your Open Source Journey**: It's aimed to kickstart your open-source journey. Here, you'll learn the basics of Git and get a solid grip on the MERN stack and I strongly believe that learning and building should go hand in hand.
-2. **React Mastery**: Once you've got the basics down, a whole new adventure begins of mastering React. This project covers everything, from simple form validation to advanced performance enhancements. And I've planned much more cool stuff to add in the near future if the project hits more number of contributors.
+## Jenkins Server Terraform
+Explore the `Jenkins-Server-TF` directory to find Terraform scripts for setting up the Jenkins Server on AWS. These scripts simplify the infrastructure provisioning process.
 
-_I'd love for you to make the most of this project - it's all about learning, helping, and growing in the open-source world._
+## Kubernetes Manifests Files
+The `Kubernetes-Manifests-Files` directory holds Kubernetes manifests for deploying your application on AWS EKS. Understand and customize these files to suit your project needs.
 
-## Setting up the project locally
+## Project Details
+🛠️ **Tools Explored:**
+- Terraform & AWS CLI for AWS infrastructure
+- Jenkins, Sonarqube, Terraform, Kubectl, and more for CI/CD setup
+- Helm, Prometheus, and Grafana for Monitoring
+- ArgoCD for GitOps practices
 
-### Setting up the Backend
+🚢 **High-Level Overview:**
+- IAM User setup & Terraform magic on AWS
+- Jenkins deployment with AWS integration
+- EKS Cluster creation & Load Balancer configuration
+- Private ECR repositories for secure image management
+- Helm charts for efficient monitoring setup
+- GitOps with ArgoCD - the cherry on top!
 
-1. **Fork and Clone the Repository**
+📈 **The journey covered everything from setting up tools to deploying a Three-Tier app, ensuring data persistence, and implementing CI/CD pipelines.**
 
-   ```bash
-   git clone https://github.com/{your-username}/wanderlust.git
-   ```
+## Getting Started
+To get started with this project, refer to our [comprehensive guide](https://amanpathakdevops.medium.com/advanced-end-to-end-devsecops-kubernetes-three-tier-project-using-aws-eks-argocd-prometheus-fbbfdb956d1a) that walks you through IAM user setup, infrastructure provisioning, CI/CD pipeline configuration, EKS cluster creation, and more.
 
-2. **Navigate to the Backend Directory**
+### Step 1: IAM Configuration
+- Create a user `eks-admin` with `AdministratorAccess`.
+- Generate Security Credentials: Access Key and Secret Access Key.
 
-   ```bash
-   cd backend
-   ```
+### Step 2: EC2 Setup
+- Launch an Ubuntu instance in your favourite region (eg. region `us-west-2`).
+- SSH into the instance from your local machine.
 
-3. **Install Required Dependencies**
+### Step 3: Install AWS CLI v2
+``` shell
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+sudo apt install unzip
+unzip awscliv2.zip
+sudo ./aws/install -i /usr/local/aws-cli -b /usr/local/bin --update
+aws configure
+```
 
-   ```bash
-   	# installs NVM (Node Version Manager)
-	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
-	# download and install Node.js
-	nvm install 20
-	# verifies the right Node.js version is in the environment
-	node -v # should print `v20.12.1`
-	# verifies the right NPM version is in the environment
-	npm -v # should print `10.5.0`
-	npm i
-   ```
+### Step 4: Install Docker
+``` shell
+sudo apt-get update
+sudo apt install docker.io
+docker ps
+sudo chown $USER /var/run/docker.sock
+```
 
-4. **Set up your MongoDB Database**
+### Step 5: Install kubectl
+``` shell
+curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.19.6/2021-01-05/bin/linux/amd64/kubectl
+chmod +x ./kubectl
+sudo mv ./kubectl /usr/local/bin
+kubectl version --short --client
+```
 
-   - Open MongoDB Compass and connect MongoDB locally at `mongodb://localhost:27017`.
+### Step 6: Install eksctl
+``` shell
+curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+sudo mv /tmp/eksctl /usr/local/bin
+eksctl version
+```
 
-5. **Import sample data**
+### Step 7: Setup EKS Cluster
+``` shell
+eksctl create cluster --name three-tier-cluster --region us-west-2 --node-type t2.medium --nodes-min 2 --nodes-max 2
+aws eks update-kubeconfig --region us-west-2 --name three-tier-cluster
+kubectl get nodes
+```
 
-   > To populate the database with sample posts, you can copy the content from the `backend/data/sample_posts.json` file and insert it as a document in the `wanderlust/posts` collection in your local MongoDB database using either MongoDB Compass or `mongoimport`.
+### Step 8: Run Manifests
+``` shell
+kubectl create namespace three-tier
+kubectl apply -f .
+kubectl delete -f .
+```
 
-   ```bash
-   mongoimport --db wanderlust --collection posts --file ./data/sample_posts.json --jsonArray
-   ```
+### Cleanup
+- To delete the EKS cluster:
+``` shell
+eksctl delete cluster --name three-tier-cluster --region us-west-2
+```
+- To clean up rest of the stuff and not incure any cost
+```
+Stop or Terminate the EC2 instance created in step 2.
+Delete the Load Balancer created in step 9 and 10.
+Go to EC2 console, access security group section and delete security groups created in previous steps
+```
 
-6. **Configure Environment Variables**
+## Contribution Guidelines
+- Fork the repository and create your feature branch.
+- Deploy the application, adding your creative enhancements.
+- Ensure your code adheres to the project's style and contribution guidelines.
+- Submit a Pull Request with a detailed description of your changes.
 
-   ```bash
-   cp .env.sample .env
-   ```
+## Rewards
+- Successful PR merges will be eligible for exciting prizes!
 
-7. **Start the Backend Server**
+## Support
+For any queries or issues, please open an issue in the repository.
 
-   ```bash
-   npm start
-   ```
-
-   > You should see the following on your terminal output on successful setup.
-   >
-   > ```bash
-   > [BACKEND] Server is running on port 5000
-   > [BACKEND] Database connected: mongodb://127.0.0.1/wanderlust
-   > ```
-
-### Setting up the Frontend
-
-1. **Open a New Terminal**
-
-   ```bash
-   cd frontend
-   ```
-
-2. **Install Dependencies**
-
-   ```bash
-   npm i
-   ```
-
-3. **Configure Environment Variables**
-
-   ```bash
-   cp .env.sample .env.local
-   ```
-
-4. **Launch the Development Server**
-
-   ```bash
-   npm run dev
-   ```
-
-## 🌟 Ready to Contribute?
-
-Kindly go through [CONTRIBUTING.md](https://github.com/krishnaacharyaa/wanderlust/blob/main/.github/CONTRIBUTING.md) to understand everything from setup to contributing guidelines.
-
-## 💖 Show Your Support
-
-If you find this project interesting and inspiring, please consider showing your support by starring it on GitHub! Your star goes a long way in helping me reach more developers and encourages me to keep enhancing the project.
-
-🚀 Feel free to get in touch with me for any further queries or support, happy to help :)
+---
+Happy Learning! 🚀👨‍💻👩‍💻

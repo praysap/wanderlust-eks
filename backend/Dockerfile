@@ -23,4 +23,4 @@ COPY --from=backend-builder /app .
 EXPOSE 5000
 
 # App
-CMD ["npm", "start"]
+CMD ["node", "server.js"]
