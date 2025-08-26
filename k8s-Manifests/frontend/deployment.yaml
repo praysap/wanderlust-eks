@@ -28,7 +28,7 @@ spec:
         image: public.ecr.aws/x4m1c1q0/threetier-frontend:latest
         imagePullPolicy: Always
         env:
-          - name: REACT_APP_BACKEND_URL
+          - name: VITE_API_PATH
             value: "http://testing.zyanmonster.live"
         ports:
         - containerPort: 3000
