@@ -23,7 +23,7 @@ WORKDIR /app
 COPY --from=frontend-builder /app .
 
 # Expose port 5173 for the Node.js application
-EXPOSE 3000
+EXPOSE 5173
 
 # Define the default command to run the application in development mode
 CMD ["npm", "run", "dev", "--", "--host"]

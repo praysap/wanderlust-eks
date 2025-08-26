@@ -31,4 +31,4 @@ spec:
           - name: VITE_API_PATH
             value: "http://testing.zyanmonster.live"
         ports:
-        - containerPort: 3000
+        - containerPort: 5173

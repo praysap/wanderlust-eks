@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
-metadata: 
-  name: frontend
+metadata:
+  name: api
   namespace: three-tier
-spec:
+spec: 
   ports:
-  - port: 5173
+  - port: 5000
     protocol: TCP
   type: LoadBalancer
   selector:
-    role: frontend   
+    role: api
