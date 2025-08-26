@@ -5,7 +5,8 @@ metadata:
   namespace: three-tier
 spec: 
   ports:
-  - port: 5000
+  - port: 80
+    targetPort: 5000
     protocol: TCP
   type: LoadBalancer
   selector:
