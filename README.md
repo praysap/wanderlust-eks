@@ -102,7 +102,8 @@ Stop or Terminate the EC2 instance created in step 2.
 Delete the Load Balancer created in step 9 and 10.
 Go to EC2 console, access security group section and delete security groups created in previous steps
 ```
-![image](https://github.com/user-attachments/assets/d1b214d2-9838-4a37-968f-9944820e49f4)
+<img width="1055" height="357" alt="image" src="https://github.com/user-attachments/assets/9c3c4d0d-41ff-4fe0-ab2e-b3287231d673" />
+
 
 <img width="1080" height="661" alt="wanderlust-landing" src="https://github.com/user-attachments/assets/1680dbec-9101-44db-b2b3-3bb369d92482" />
 
