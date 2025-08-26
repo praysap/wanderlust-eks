@@ -95,17 +95,7 @@ kubectl apply -f .
 kubectl delete -f .
 ```
 
-### Cleanup
-- To delete the EKS cluster:
-``` shell
-eksctl delete cluster --name three-tier-cluster --region us-west-2
-```
-- To clean up rest of the stuff and not incure any cost
-```
-Stop or Terminate the EC2 instance created in step 2.
-Delete the Load Balancer created in step 9 and 10.
-Go to EC2 console, access security group section and delete security groups created in previous steps
-```
+
 <img width="1055" height="357" alt="image" src="https://github.com/user-attachments/assets/9c3c4d0d-41ff-4fe0-ab2e-b3287231d673" />
 
 
@@ -119,7 +109,17 @@ Go to EC2 console, access security group section and delete security groups crea
 
 <img width="957" height="497" alt="image (1)" src="https://github.com/user-attachments/assets/5a89a16d-60ef-4c5c-8721-555d1a39f110" />
 
-
+### Cleanup
+- To delete the EKS cluster:
+``` shell
+eksctl delete cluster --name three-tier-cluster --region us-west-2
+```
+- To clean up rest of the stuff and not incure any cost
+```
+Stop or Terminate the EC2 instance created in step 2.
+Delete the Load Balancer created in step 9 and 10.
+Go to EC2 console, access security group section and delete security groups created in previous steps
+```
 
 
 
