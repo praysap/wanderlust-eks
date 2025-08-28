@@ -53,7 +53,7 @@ docker ps
 sudo chown $USER /var/run/docker.sock
 ```
 
-### Step 5: Build Docker images and Push
+### Step 5: Build Docker images
 ``` shell
 docker build -t wanderlust-backend
 ```
