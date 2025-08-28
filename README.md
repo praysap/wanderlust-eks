@@ -57,11 +57,11 @@ sudo chown $USER /var/run/docker.sock
 ``` shell
 docker build -t wanderlust-backend
 ```
-- <i> **After the build completes, tag your image so you can push the image to this repository:**
+ **After the build completes, tag your image so you can push the image to this repository:**
 ``` shell
 docker tag wanderlust-backend:latest public.ecr.aws/x4m1c1q0/wanderlust-backend:latest
 ```
-- <i> **Run the following command to push this image to your newly created AWS repository**
+**Run the following command to push this image to your newly created AWS repository**
 ``` shell
 docker push public.ecr.aws/x4m1c1q0/wanderlust-backend:latest
 ```
