@@ -4,7 +4,7 @@ This repository contains a complete Kubernetes deployment setup for a MERN (Mong
 
 ## 🛠️ Key Features & Tools
 
-- 🧠 **Amazon EKS** → Kubernetes cluster provisioning and management  
+- 🧠 **EKS** → Kubernetes cluster provisioning and management  
 - 📦 **Helm** → Templated, reusable Kubernetes manifests for simplified deployment  
 - 🐳 **Docker** → Containerization of backend, frontend, and database services  
 - ⚙️ **Jenkins** (optional) → CI/CD pipeline automation for seamless deployment  
@@ -52,16 +52,6 @@ sudo apt install docker.io
 docker ps
 sudo chown $USER /var/run/docker.sock
 ```
-- <i>  **Build the Docker image**
-```bash
-docker image build --no-cache --build-arg REACT_APP_API_BASE_URL=http://10.228.12.107:30585 -t praysap/learner-frontend:latest .
-```
-- <i> **Push the image to Docker Hub**
-```bash
-docker push praysap/learner-frontend:latest
-```
-<img width="944" height="441" alt="image" src="https://github.com/user-attachments/assets/ef1191ce-0114-461f-a9bf-e604704851ef" />
-
 
 - <i> **Build the Docker image**
 ```bash
@@ -75,6 +65,7 @@ docker tag wanderlust-backend:latest public.ecr.aws/x4m1c1q0/wanderlust-backend:
 ```bash
 docker push public.ecr.aws/x4m1c1q0/wanderlust-backend:latest
 ```
+
 ### Step 5: Install kubectl
 ``` shell
 curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.19.6/2021-01-05/bin/linux/amd64/kubectl
