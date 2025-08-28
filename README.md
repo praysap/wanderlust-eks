@@ -53,20 +53,20 @@ docker ps
 sudo chown $USER /var/run/docker.sock
 ```
 
-- <i> **Build the Docker image**
-```bash
+### Step 5: Build Docker images and Push
+``` shell
 docker build -t wanderlust-backend
 ```
 - <i> **After the build completes, tag your image so you can push the image to this repository:**
-```bash
+``` shell
 docker tag wanderlust-backend:latest public.ecr.aws/x4m1c1q0/wanderlust-backend:latest
 ```
 - <i> **Run the following command to push this image to your newly created AWS repository**
-```bash
+``` shell
 docker push public.ecr.aws/x4m1c1q0/wanderlust-backend:latest
 ```
 
-### Step 5: Install kubectl
+### Step 6: Install kubectl
 ``` shell
 curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.19.6/2021-01-05/bin/linux/amd64/kubectl
 chmod +x ./kubectl
@@ -74,14 +74,14 @@ sudo mv ./kubectl /usr/local/bin
 kubectl version --short --client
 ```
 
-### Step 6: Install eksctl
+### Step 7: Install eksctl
 ``` shell
 curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
 sudo mv /tmp/eksctl /usr/local/bin
 eksctl version
 ```
 
-### Step 7: Setup EKS Cluster
+### Step 8: Setup EKS Cluster
 ``` shell
 eksctl create cluster --name three-tier-cluster --region us-west-2 --node-type t2.medium --nodes-min 2 --nodes-max 2
 aws eks update-kubeconfig --region us-west-2 --name three-tier-cluster
@@ -92,7 +92,7 @@ kubectl get nodes
 <img width="800" height="166" alt="image (3)" src="https://github.com/user-attachments/assets/77124c0d-6501-41b4-81e8-159ce50fb7bc" />
 
 
-### Step 8: Run Manifests
+### Step 9: Run Manifests
 ``` shell
 kubectl create namespace three-tier
 kubectl apply -f .
