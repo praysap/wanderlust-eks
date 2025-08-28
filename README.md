@@ -1,4 +1,4 @@
-# 🚀 MERN Application Deployment on Kubernetes (EKS)
+# 🚀 END-to-END MERN Application Deployment and Monitoring with Terraform, Ansible, Prometheus, and Grafana
 
 This repository contains a complete Kubernetes deployment setup for a MERN (MongoDB, Express.js, React, Node.js) application using:
 
