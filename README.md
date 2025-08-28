@@ -1,8 +1,18 @@
-# Wanderlust - Your Ultimate Travel Blog 🌍✈️
+# 🚀 MERN Application Deployment on Kubernetes (EKS)
 
-WanderLust is a simple MERN travel blog website ✈ This project is aimed to help people to contribute in open source, upskill in react and also master git.
+This repository contains a complete Kubernetes deployment setup for a MERN (MongoDB, Express.js, React, Node.js) application using:
 
-![Preview Image](https://github.com/krishnaacharyaa/wanderlust/assets/116620586/17ba9da6-225f-481d-87c0-5d5a010a9538)
+## 🛠️ Key Features & Tools
+
+- 🧠 **Amazon EKS** → Kubernetes cluster provisioning and management  
+- 📦 **Helm** → Templated, reusable Kubernetes manifests for simplified deployment  
+- 🐳 **Docker** → Containerization of backend, frontend, and database services  
+- ⚙️ **Jenkins** (optional) → CI/CD pipeline automation for seamless deployment  
+- 🌍 **Terraform & AWS CLI** → Infrastructure as Code (IaC) for AWS resource provisioning  
+- 🔒 **ECR** → Secure container image registry for application images
+- 📊 **Prometheus** → Metrics collection and alerting for application & cluster monitoring  
+- 📈 **Grafana** → Interactive dashboards for real-time visualization and insights   
+
 
 
 ## Application Code
@@ -17,25 +27,6 @@ Explore the `Jenkins-Server-TF` directory to find Terraform scripts for setting 
 ## Kubernetes Manifests Files
 The `Kubernetes-Manifests-Files` directory holds Kubernetes manifests for deploying your application on AWS EKS. Understand and customize these files to suit your project needs.
 
-## Project Details
-🛠️ **Tools Explored:**
-- Terraform & AWS CLI for AWS infrastructure
-- Jenkins, Sonarqube, Terraform, Kubectl, and more for CI/CD setup
-- Helm, Prometheus, and Grafana for Monitoring
-- ArgoCD for GitOps practices
-
-🚢 **High-Level Overview:**
-- IAM User setup & Terraform magic on AWS
-- Jenkins deployment with AWS integration
-- EKS Cluster creation & Load Balancer configuration
-- Private ECR repositories for secure image management
-- Helm charts for efficient monitoring setup
-- GitOps with ArgoCD - the cherry on top!
-
-📈 **The journey covered everything from setting up tools to deploying a Three-Tier app, ensuring data persistence, and implementing CI/CD pipelines.**
-
-## Getting Started
-To get started with this project, refer to our [comprehensive guide](https://amanpathakdevops.medium.com/advanced-end-to-end-devsecops-kubernetes-three-tier-project-using-aws-eks-argocd-prometheus-fbbfdb956d1a) that walks you through IAM user setup, infrastructure provisioning, CI/CD pipeline configuration, EKS cluster creation, and more.
 
 ### Step 1: IAM Configuration
 - Create a user `eks-admin` with `AdministratorAccess`.
@@ -61,7 +52,29 @@ sudo apt install docker.io
 docker ps
 sudo chown $USER /var/run/docker.sock
 ```
+- <i>  **Build the Docker image**
+```bash
+docker image build --no-cache --build-arg REACT_APP_API_BASE_URL=http://10.228.12.107:30585 -t praysap/learner-frontend:latest .
+```
+- <i> **Push the image to Docker Hub**
+```bash
+docker push praysap/learner-frontend:latest
+```
+<img width="944" height="441" alt="image" src="https://github.com/user-attachments/assets/ef1191ce-0114-461f-a9bf-e604704851ef" />
 
+
+- <i> **Build the Docker image**
+```bash
+docker build -t wanderlust-backend
+```
+- <i> **After the build completes, tag your image so you can push the image to this repository:**
+```bash
+docker tag wanderlust-backend:latest public.ecr.aws/x4m1c1q0/wanderlust-backend:latest
+```
+- <i> **Run the following command to push this image to your newly created AWS repository**
+```bash
+docker push public.ecr.aws/x4m1c1q0/wanderlust-backend:latest
+```
 ### Step 5: Install kubectl
 ``` shell
 curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.19.6/2021-01-05/bin/linux/amd64/kubectl
