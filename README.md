@@ -86,7 +86,7 @@ kubectl create namespace three-tier
 kubectl apply -f .
 kubectl delete -f .
 ```
-
+<img width="1055" height="357" alt="image" src="https://github.com/user-attachments/assets/9c3c4d0d-41ff-4fe0-ab2e-b3287231d673" />
 ## ⚙️ Jenkins configuration
 
 ---
@@ -333,9 +333,6 @@ pipeline {
   }
 }
 ```
-
-
-<img width="1055" height="357" alt="image" src="https://github.com/user-attachments/assets/9c3c4d0d-41ff-4fe0-ab2e-b3287231d673" />
 
 
 <img width="1080" height="661" alt="wanderlust-landing" src="https://github.com/user-attachments/assets/1680dbec-9101-44db-b2b3-3bb369d92482" />
