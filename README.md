@@ -211,7 +211,7 @@ sudo systemctl restart jenkins
 
 ### Pipeline setup
 1. Create Jenkinsfile inside your project directory.
-2. Create dockerhub credentials in jenkins.
+2. Create ECR credentials in jenkins.
 3. Create jenkins pipeline.
 
 ```
