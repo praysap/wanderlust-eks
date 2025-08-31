@@ -15,18 +15,6 @@ This repository contains a complete Kubernetes deployment setup for a MERN (Mong
 
 
 
-## Application Code
-The `Application-Code` directory contains the source code for the Three-Tier Web Application. Dive into this directory to explore the frontend and backend implementations.
-
-## Jenkins Pipeline Code
-In the `Jenkins-Pipeline-Code` directory, you'll find Jenkins pipeline scripts. These scripts automate the CI/CD process, ensuring smooth integration and deployment of your application.
-
-## Jenkins Server Terraform
-Explore the `Jenkins-Server-TF` directory to find Terraform scripts for setting up the Jenkins Server on AWS. These scripts simplify the infrastructure provisioning process.
-
-## Kubernetes Manifests Files
-The `Kubernetes-Manifests-Files` directory holds Kubernetes manifests for deploying your application on AWS EKS. Understand and customize these files to suit your project needs.
-
 
 ### Step 1: IAM Configuration
 - Create a user `eks-admin` with `AdministratorAccess`.
@@ -97,6 +85,244 @@ kubectl get nodes
 kubectl create namespace three-tier
 kubectl apply -f .
 kubectl delete -f .
+```
+
+## ⚙️ Jenkins configuration
+
+---
+
+## ✅ Prerequisites
+
+- 🐧 Ubuntu 24.04 system
+- 🔑 `sudo` privileges
+- ☕ Java (OpenJDK 11 or 17 — recommended: 17)
+
+---
+
+## 🔄 Post-Installation Recommendations
+
+✅ Install the following plugins during setup:
+
+- Pipeline
+- Docker Pipeline
+- Git
+- SSH Agent
+- Credentials Binding
+- Kubernetes CLI
+- Helm
+
+---
+
+## 🛠️ Installation Steps
+
+### 1. 🔄 Update System Packages
+
+```bash
+sudo apt update && sudo apt upgrade -y
+```
+
+### 2. ☕ Install Java (OpenJDK 17)
+
+```bash
+sudo apt install -y openjdk-17-jdk
+```
+
+🔍 Verify Java installation:
+
+```bash
+java -version
+```
+
+### 3. 📦 Add Jenkins Repository and Key
+
+```bash
+sudo wget -O /usr/share/keyrings/jenkins-keyring.asc \
+  https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+
+echo "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/" | \
+  sudo tee /etc/apt/sources.list.d/jenkins.list > /dev/null
+```
+
+### 4. 🧰 Install Jenkins
+
+```bash
+sudo apt update
+sudo apt install -y jenkins
+```
+
+### 5. 🚀 Start and Enable Jenkins
+
+```bash
+sudo systemctl enable jenkins
+sudo systemctl start jenkins
+```
+
+Check Jenkins service status:
+
+```bash
+sudo systemctl status jenkins
+```
+
+### 6. 🔥 Open Firewall (if enabled)
+
+```bash
+sudo ufw allow 8080
+sudo ufw allow OpenSSH
+sudo ufw enable
+```
+
+### 7. 🌐 Access Jenkins
+
+Open your browser and go to: `http://your_server_ip:8080`
+
+🔑 Retrieve the initial admin password:
+
+```bash
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+```
+
+Follow the setup wizard to:
+
+- Create your first admin user 👤
+- Install recommended plugins 🔌
+- Configure Jenkins as needed ⚙️
+
+### 🔧 Optional: Change Jenkins Port
+
+Edit the Jenkins config file:
+
+```bash
+sudo nano /etc/default/jenkins
+```
+
+Change the line:
+
+```
+HTTP_PORT=8080
+```
+
+Restart Jenkins:
+
+```bash
+sudo systemctl restart jenkins
+```
+
+---
+
+### Pipeline setup
+1. Create Jenkinsfile inside your project directory.
+2. Create dockerhub credentials in jenkins.
+3. Create jenkins pipeline.
+
+```
+pipeline {
+    agent any
+    
+    environment {
+        REPO_URL = 'https://github.com/vipulsaw/Container-Orchestration-2.git'
+        REPO_NAME = 'Container-Orchestration-2'
+        HELM_CHART_DIR = 'mern-app'
+        NAMESPACE = 'mern'
+        RELEASE_NAME = 'mern-app'
+        EC2_INSTANCE_IP = '13.203.66.123'
+        DOCKER_HUB_REPO = 'vipulsaw123'
+    }
+    
+    stages {
+        stage('Checkout Source Code') {
+            steps {
+                checkout([$class: 'GitSCM', 
+                         branches: [[name: '*/main']], 
+                         userRemoteConfigs: [[url: env.REPO_URL]]])
+                echo "Repository cloned successfully"
+            }
+        }
+        
+        stage('Build Docker Images') {
+            steps {
+                script {
+                    docker.build("${env.DOCKER_HUB_REPO}/learner-frontend:latest", './learnerReportCS_frontend')
+                    docker.build("${env.DOCKER_HUB_REPO}/learner-backend:latest", './learnerReportCS_backend')
+                    echo "Docker images built successfully"
+                }
+            }
+        }
+        
+        stage('Push Docker Images') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(
+                        credentialsId: 'docker-hub-credentials-Vipul', 
+                        usernameVariable: 'DOCKER_HUB_USER', 
+                        passwordVariable: 'DOCKER_HUB_PASSWORD'
+                    )]) {
+                        sh "echo \$DOCKER_HUB_PASSWORD | docker login -u \$DOCKER_HUB_USER --password-stdin"
+                        sh "docker push ${env.DOCKER_HUB_REPO}/learner-frontend:latest"
+                        sh "docker push ${env.DOCKER_HUB_REPO}/learner-backend:latest"
+                        echo "Docker images pushed to Docker Hub successfully"
+                    }
+                }
+            }
+        }
+        
+        stage('Copy Repository to Target EC2') {
+            steps {
+                sshagent(credentials: ['vipulroot']) {
+                    script {
+                        sh """
+                            ssh -o StrictHostKeyChecking=no root@${env.EC2_INSTANCE_IP} \
+                            'mkdir -p ~/${env.REPO_NAME}'
+                        """
+                        sh """
+                            rsync -avz -e "ssh -o StrictHostKeyChecking=no" \
+                            --exclude='.git' \
+                            --delete \
+                            ./ root@${env.EC2_INSTANCE_IP}:~/${env.REPO_NAME}/
+                        """
+                        echo "Files copied to EC2 instance successfully"
+                    }
+                }
+            }
+        }
+        
+        stage('Install/Upgrade Helm Release') {
+            steps {
+                sshagent(credentials: ['vipulroot']) {
+                    script {
+                        sh """
+                            ssh -o StrictHostKeyChecking=no root@${env.EC2_INSTANCE_IP} \
+                            'cd ~/${env.REPO_NAME}/${env.HELM_CHART_DIR} && \
+                            helm upgrade --install ${env.RELEASE_NAME} . \
+                            --namespace ${env.NAMESPACE} \
+                            --create-namespace'
+                        """
+                        echo "Helm release upgraded successfully"
+                    }
+                }
+            }
+        }
+        
+        stage('Verify Deployment') {
+            steps {
+                sshagent(credentials: ['vipulroot']) {
+                    script {
+                        sh """
+                            ssh -o StrictHostKeyChecking=no root@${env.EC2_INSTANCE_IP} \
+                            'helm list -n ${env.NAMESPACE} && \
+                            kubectl get pods -n ${env.NAMESPACE}'
+                        """
+                    }
+                }
+            }
+        }
+    }
+    
+    post {
+        always {
+            echo 'Pipeline completed!'
+        }
+    }
+}
 ```
 
 
