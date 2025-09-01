@@ -211,7 +211,7 @@ sudo systemctl restart jenkins
 
 ### Pipeline setup
 1. Create Jenkinsfile inside your project directory.
-2. Create ECR credentials in jenkins.
+2. Create AWS CLI credentials in jenkins.
 3. Create jenkins pipeline.
 
 ```
@@ -335,6 +335,8 @@ pipeline {
 ```
 
 <img width="1079" height="652" alt="image" src="https://github.com/user-attachments/assets/fcb50ad1-c83d-4d47-a3e8-4089b0627b87" />
+
+<img width="1080" height="655" alt="image" src="https://github.com/user-attachments/assets/4f2b87cd-fba0-4fac-975f-6f2d3ad5588b" />
 
 <img width="1080" height="661" alt="wanderlust-landing" src="https://github.com/user-attachments/assets/1680dbec-9101-44db-b2b3-3bb369d92482" />
 
