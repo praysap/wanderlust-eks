@@ -211,8 +211,8 @@ sudo systemctl restart jenkins
 
 ### Pipeline setup
 1. Create Jenkinsfile inside your project directory.
-2. Configure Jenkins to access EKS and AWS resources using credentials and AWS IAM roles.
-3.  Set up Git integration for Jenkins to trigger builds based on code changes.
+2. Configure Jenkins Credentials Go to Manage Jenkins → Credentials →  AWS Access Key ID  & Secret Access Key (for EKS access) These credentials will be used in the pipeline securely.
+3. Set up Git integration for Jenkins to trigger builds based on code changes.
 4. Create jenkins pipeline.
 
 ```
