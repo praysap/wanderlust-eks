@@ -350,8 +350,15 @@ pipeline {
 <img width="1079" height="665" alt="blog-added" src="https://github.com/user-attachments/assets/33676805-82f3-466e-8e8a-87ad293097d5" />
 
 <img width="955" height="500" alt="image" src="https://github.com/user-attachments/assets/49708fe4-f474-45f8-bb06-9c1e74e05c50" />
+<img width="1061" height="659" alt="image" src="https://github.com/user-attachments/assets/bee9255c-e26a-4f0d-9fec-d93cf6948ccc" />
+
+<img width="1054" height="647" alt="image" src="https://github.com/user-attachments/assets/7bac6347-afe2-4295-ab07-bd26529db480" />
+<img width="1058" height="650" alt="image" src="https://github.com/user-attachments/assets/bb9b060d-4fed-4d58-9256-0f6486219712" />
+<img width="1063" height="654" alt="image" src="https://github.com/user-attachments/assets/0bfa96d5-cf12-42b4-9551-fb48fa8ad7da" />
+
 
 <img width="957" height="497" alt="image (1)" src="https://github.com/user-attachments/assets/5a89a16d-60ef-4c5c-8721-555d1a39f110" />
+
 
 ### Cleanup
 - To delete the EKS cluster:
