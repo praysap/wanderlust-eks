@@ -91,6 +91,28 @@ kubectl delete -f .
 
 <img width="950" height="357" alt="image" src="https://github.com/user-attachments/assets/9c3c4d0d-41ff-4fe0-ab2e-b3287231d673" />
 
+### Step 10: Install prometheus and Grafana
+``` shell
+helm install prometheus prometheus-community/prometheus -n monitoring
+```
+``` shell
+helm upgrade prometheus prometheus-community/prometheus \
+  -n monitoring \
+  --set server.service.type=LoadBalancer \
+  --set server.persistentVolume.enabled=false \
+  --set alertmanager.persistentVolume.enabled=false
+```
+``` shell
+helm repo add grafana https://grafana.github.io/helm-charts
+helm repo update
+helm install grafana grafana/grafana \
+  --namespace monitoring \
+  --set service.type=LoadBalancer \
+  --set persistence.enabled=false \
+  --set adminUser=admin \
+  --set adminPassword=admin123
+```
+
 ## ⚙️ Jenkins configuration
 
 ---
@@ -356,8 +378,6 @@ pipeline {
 <img width="1058" height="650" alt="image" src="https://github.com/user-attachments/assets/bb9b060d-4fed-4d58-9256-0f6486219712" />
 <img width="1063" height="654" alt="image" src="https://github.com/user-attachments/assets/0bfa96d5-cf12-42b4-9551-fb48fa8ad7da" />
 
-
-<img width="957" height="497" alt="image (1)" src="https://github.com/user-attachments/assets/5a89a16d-60ef-4c5c-8721-555d1a39f110" />
 
 
 ### Cleanup
