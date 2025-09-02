@@ -83,10 +83,14 @@ kubectl get nodes
 ### Step 9: Run Manifests
 ``` shell
 kubectl create namespace three-tier
+kubectl config set-context --current --namespace three-tier
 kubectl apply -f .
 kubectl delete -f .
 ```
-<img width="1055" height="357" alt="image" src="https://github.com/user-attachments/assets/9c3c4d0d-41ff-4fe0-ab2e-b3287231d673" />
+<img width="950" height="119" alt="image" src="https://github.com/user-attachments/assets/47929f62-8473-41ad-b8d2-a4c9a2bbc611" />
+
+<img width="950" height="357" alt="image" src="https://github.com/user-attachments/assets/9c3c4d0d-41ff-4fe0-ab2e-b3287231d673" />
+
 ## ⚙️ Jenkins configuration
 
 ---
