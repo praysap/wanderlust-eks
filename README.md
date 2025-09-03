@@ -91,8 +91,9 @@ kubectl delete -f .
 
 <img width="950" height="357" alt="image" src="https://github.com/user-attachments/assets/9c3c4d0d-41ff-4fe0-ab2e-b3287231d673" />
 
-### Step 10: Install prometheus and Grafana
+🚀 Prometheus & Grafana Setup on Kubernetes
 ``` shell
+kubectl create namespace monitoring
 helm install prometheus prometheus-community/prometheus -n monitoring
 ```
 ``` shell
@@ -102,6 +103,25 @@ helm upgrade prometheus prometheus-community/prometheus \
   --set server.persistentVolume.enabled=false \
   --set alertmanager.persistentVolume.enabled=false
 ```
+
+Verify Prometheus Deployment Check the Helm release
+``` shell
+helm list -n monitoring
+```
+<img width="950" height="101" alt="image" src="https://github.com/user-attachments/assets/96404aa2-59ee-429d-8816-831e7d1189b6" />
+
+Check if pods are running
+``` shell
+kubectl get pods -n monitoring
+```
+<img width="950" height="214" alt="image" src="https://github.com/user-attachments/assets/a7d8f311-16b2-4f2d-ad31-b0c6f01f99f0" />
+
+you can access the Prometheus UI through the AWS LoadBalancer service.
+``` shell
+Service kubectl get svc -n monitoring
+```
+<img width="950" height="338" alt="image" src="https://github.com/user-attachments/assets/4f2bbe09-276e-4ccd-b736-45750f0aba0c" />
+
 ``` shell
 helm repo add grafana https://grafana.github.io/helm-charts
 helm repo update
@@ -112,6 +132,19 @@ helm install grafana grafana/grafana \
   --set adminUser=admin \
   --set adminPassword=admin123
 ```
+
+<img width="950" height="873" alt="image" src="https://github.com/user-attachments/assets/fd69f83e-462a-42f9-b188-c2f3af2060c1" />
+
+Verify Service
+``` shell
+kubectl get svc -n monitoring
+```
+<img width="950" height="414" alt="image" src="https://github.com/user-attachments/assets/75c39210-bcb9-4baf-bebf-167370bda575" />
+
+Open Grafana in Browser http://
+<img width="1400`" height="964" alt="image" src="https://github.com/user-attachments/assets/644d3a7b-2191-4ede-8ede-bee126980e11" />
+
+
 
 ## ⚙️ Jenkins configuration
 
