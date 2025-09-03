@@ -91,7 +91,7 @@ kubectl delete -f .
 
 <img width="950" height="357" alt="image" src="https://github.com/user-attachments/assets/9c3c4d0d-41ff-4fe0-ab2e-b3287231d673" />
 
-🚀 Prometheus & Grafana Setup on Kubernetes
+### 🚀 Prometheus & Grafana Setup on Kubernetes   
 ``` shell
 kubectl create namespace monitoring
 helm install prometheus prometheus-community/prometheus -n monitoring
@@ -122,6 +122,12 @@ Service kubectl get svc -n monitoring
 ```
 <img width="950" height="338" alt="image" src="https://github.com/user-attachments/assets/4f2bbe09-276e-4ccd-b736-45750f0aba0c" />
 
+Open Prometheus in Browser http://
+<img width="1063" height="654" alt="image" src="https://github.com/user-attachments/assets/0bfa96d5-cf12-42b4-9551-fb48fa8ad7da" />
+<img width="1054" height="647" alt="image" src="https://github.com/user-attachments/assets/7bac6347-afe2-4295-ab07-bd26529db480" />
+<img width="1058" height="650" alt="image" src="https://github.com/user-attachments/assets/bb9b060d-4fed-4d58-9256-0f6486219712" />
+
+
 ``` shell
 helm repo add grafana https://grafana.github.io/helm-charts
 helm repo update
@@ -143,7 +149,8 @@ kubectl get svc -n monitoring
 
 Open Grafana in Browser http://
 <img width="1400`" height="964" alt="image" src="https://github.com/user-attachments/assets/644d3a7b-2191-4ede-8ede-bee126980e11" />
-
+<img width="1061" height="659" alt="image" src="https://github.com/user-attachments/assets/bee9255c-e26a-4f0d-9fec-d93cf6948ccc" />
+<img width="955" height="500" alt="image" src="https://github.com/user-attachments/assets/49708fe4-f474-45f8-bb06-9c1e74e05c50" />
 
 
 ## ⚙️ Jenkins configuration
@@ -404,12 +411,8 @@ pipeline {
 
 <img width="1079" height="665" alt="blog-added" src="https://github.com/user-attachments/assets/33676805-82f3-466e-8e8a-87ad293097d5" />
 
-<img width="955" height="500" alt="image" src="https://github.com/user-attachments/assets/49708fe4-f474-45f8-bb06-9c1e74e05c50" />
-<img width="1061" height="659" alt="image" src="https://github.com/user-attachments/assets/bee9255c-e26a-4f0d-9fec-d93cf6948ccc" />
 
-<img width="1054" height="647" alt="image" src="https://github.com/user-attachments/assets/7bac6347-afe2-4295-ab07-bd26529db480" />
-<img width="1058" height="650" alt="image" src="https://github.com/user-attachments/assets/bb9b060d-4fed-4d58-9256-0f6486219712" />
-<img width="1063" height="654" alt="image" src="https://github.com/user-attachments/assets/0bfa96d5-cf12-42b4-9551-fb48fa8ad7da" />
+
 
 
 
@@ -418,12 +421,8 @@ pipeline {
 ``` shell
 eksctl delete cluster --name three-tier-cluster --region us-west-2
 ```
-- To clean up rest of the stuff and not incure any cost
-```
-Stop or Terminate the EC2 instance created in step 2.
-Delete the Load Balancer created in step 9 and 10.
-Go to EC2 console, access security group section and delete security groups created in previous steps
-```
+
+
 
 
 
